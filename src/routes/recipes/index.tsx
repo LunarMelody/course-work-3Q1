@@ -20,7 +20,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   let recipes = RECIPES;
 
   if (query != null && typeof query === "string" && query.length > 1) {
-    recipes = RECIPES.filter((r) => r.title.includes(query));
+    recipes = RECIPES.filter((r) => r.title.toLowerCase().includes(query.toLowerCase()));
   }
 
   return { recipes, query };
@@ -55,25 +55,32 @@ export default function Recipes() {
   return (
     <Main display="flex" flexDir="col" className="gap-4">
       <Container>
-        <form ref={searchFormRef} onSubmit={onSearchSubmit} className="daisy-input-group">
+        <div className="daisy-input-group">
           <Button onClick={onResetClick}>
             <XMarkIcon type="button" className="h-5 w-5" />
           </Button>
-          <input
-            ref={searchInputRef}
-            name="query"
-            type="text"
-            placeholder="Введите запрос"
-            className="daisy-input-bordered daisy-input-primary daisy-input w-full"
-            defaultValue={query ?? undefined}
-            autoFocus
-          />
-          <Button>
-            <CheckIcon type="submit" className="h-5 w-5" />
-          </Button>
-        </form>
+          <form ref={searchFormRef} onSubmit={onSearchSubmit} className="daisy-input-group">
+            <input
+              ref={searchInputRef}
+              name="query"
+              type="text"
+              placeholder="Введите запрос"
+              className="daisy-input-bordered daisy-input-primary daisy-input w-full"
+              defaultValue={query ?? undefined}
+              autoFocus
+            />
+            <Button>
+              <CheckIcon type="submit" className="h-5 w-5" />
+            </Button>
+          </form>
+        </div>
       </Container>
-      {recipes.length <= 0 && <Container className="flex items-center justify-center"></Container>}
+      {recipes.length <= 0 && (
+        <Container minHeight="full" className="flex flex-col items-center justify-center space-y-4">
+          <h2 className="text-4xl font-bold">Здесь так пусто...</h2>
+          <p>По вашему запросу ничего не найдено.</p>
+        </Container>
+      )}
       {recipes.length > 0 && (
         <Container className="flex flex-row flex-wrap justify-evenly gap-6">
           {recipes.map((recipe, idx) => (
