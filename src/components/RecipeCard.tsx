@@ -11,9 +11,9 @@ type RecipeCardProps = {
 
 export const RecipeCard: FC<RecipeCardProps> = ({ title, description, thumbnail, slug }) => {
   return (
-    <div className="daisy-card w-full max-w-[320px] bg-base-100 shadow-xl">
-      <figure>
-        <img src={thumbnail} className="aspect-square object-cover" />
+    <div className="daisy-card h-fit w-full max-w-[320px] bg-base-100 shadow-xl">
+      <figure className="w-full">
+        <img src={thumbnail} className="aspect-square w-full object-cover" />
       </figure>
 
       <div className="daisy-card-body space-y-4">
