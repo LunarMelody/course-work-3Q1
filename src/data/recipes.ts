@@ -1,3 +1,5 @@
+import Fuse from "fuse.js";
+
 export type RecipeMeta = {
   id: string;
   slug: string;
@@ -66,3 +68,7 @@ export const RECIPES: Recipe[] = [
     ],
   },
 ];
+
+export const RECIPES_FUSE = new Fuse(RECIPES, {
+  keys: ["title"],
+});

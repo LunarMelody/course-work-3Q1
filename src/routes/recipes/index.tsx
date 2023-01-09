@@ -9,7 +9,7 @@ import { Container } from "~/components/Container";
 import Main from "~/components/Main";
 import { RecipeCard } from "~/components/RecipeCard";
 import { Button } from "~/components/ui/Button";
-import { RECIPES } from "~/data/recipes";
+import { RECIPES, RECIPES_FUSE } from "~/data/recipes";
 
 export type Loader = Awaited<ReturnType<typeof loader>>;
 
@@ -20,7 +20,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   let recipes = RECIPES;
 
   if (query != null && typeof query === "string" && query.length > 1) {
-    recipes = RECIPES.filter((r) => r.title.toLowerCase().includes(query.toLowerCase()));
+    recipes = RECIPES_FUSE.search(query).map((result) => result.item);
   }
 
   return { recipes, query };
