@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import { Container } from "~/components/Container";
 import Main from "~/components/Main";
+import { RecipeCard } from "~/components/RecipeCard";
 import { RECIPES } from "~/data/recipes";
 
 export type Loader = Awaited<ReturnType<typeof loader>>;
@@ -28,9 +29,41 @@ export default function Recipe() {
   const { recipe } = useLoaderData() as Loader;
 
   return (
-    <Main>
-      <Container minHeight="full" className="">
-        {recipe.title}
+    <Main minHeight="full" height="auto" className="flex flex-col justify-center">
+      <Container
+        minHeight="fit"
+        className="relative flex flex-col gap-6 md:grid md:grid-cols-[auto_1fr]"
+      >
+        <div className="flex h-fit flex-col gap-6 md:sticky md:top-[calc(var(--header-height)+1rem)]">
+          <RecipeCard
+            title={recipe.title}
+            thumbnail={recipe.thumbnailUrl}
+            className="w-full max-w-none md:max-w-[320px]"
+          />
+        </div>
+
+        <div className="rounded-box flex flex-col gap-6 bg-base-100 p-8 shadow-lg">
+          <h2 className="text-xl font-bold">Ингредиенты</h2>
+          <div className="overflow-x-auto">
+            <table className="daisy-table-zebra daisy-table daisy-table-compact w-full">
+              <tbody>
+                {recipe.ingredients.map(([name, amount], idx) => (
+                  <tr key={idx} className="flex flex-row">
+                    <td className="flex-1">{name}</td>
+                    <td>{amount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h2 className="text-xl font-bold">Способ приготовления</h2>
+          <ul className="list-outside list-disc pl-5">
+            {recipe.steps.map((step, idx) => (
+              <li key={idx}>{step}</li>
+            ))}
+          </ul>
+        </div>
       </Container>
     </Main>
   );

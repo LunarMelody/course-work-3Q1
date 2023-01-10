@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Index from "./routes";
 import ErrorPage from "./routes/error-page";
 import Recipes, { loader as recipesIndexLoader } from "./routes/recipes";
+import { SavedRecipes } from "./routes/recipes/saved";
 import Recipe, {
   ErrorBoundary as RecipeErrorBoundary,
   loader as recipeLoader,
@@ -22,14 +23,23 @@ const router = createBrowserRouter([
       },
       {
         path: "recipes",
-        element: <Recipes />,
-        loader: recipesIndexLoader,
-      },
-      {
-        path: "recipes/:slug",
-        element: <Recipe />,
-        loader: recipeLoader,
-        errorElement: <RecipeErrorBoundary />,
+        children: [
+          {
+            index: true,
+            element: <Recipes />,
+            loader: recipesIndexLoader,
+          },
+          {
+            path: "saved",
+            element: <SavedRecipes />,
+          },
+          {
+            path: ":slug",
+            element: <Recipe />,
+            loader: recipeLoader,
+            errorElement: <RecipeErrorBoundary />,
+          },
+        ],
       },
     ],
   },

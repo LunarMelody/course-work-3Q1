@@ -27,6 +27,11 @@ const mainVariants = cva("p-4", {
     height: {
       fit: "h-fit",
       full: "h-[var(--view-height-no-header)]",
+      auto: "h-auto",
+    },
+    minHeight: {
+      fit: "min-h-fit",
+      full: "min-h-[var(--view-height-no-header)]",
     },
   },
   defaultVariants: {
@@ -43,6 +48,7 @@ export const Main: FC<MainProps> = ({
   color,
   width,
   height,
+  minHeight,
   className,
   children,
   display,
@@ -53,6 +59,7 @@ export const Main: FC<MainProps> = ({
     className,
     color,
     height,
+    minHeight,
     width,
     display,
     flexDir,
