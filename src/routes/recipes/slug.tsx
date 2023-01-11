@@ -1,8 +1,11 @@
 import type { LoaderFunctionArgs } from "react-router-dom";
 
+import { BookmarkIcon, BookmarkSlashIcon } from "@heroicons/react/20/solid";
+import { useAtom } from "jotai";
 import { useRouteError, useLoaderData } from "react-router-dom";
 import { z } from "zod";
 
+import { markedRecipesSlugAtom } from "~/atoms/savedRecipes";
 import { Container } from "~/components/Container";
 import Main from "~/components/Main";
 import { RecipeCard } from "~/components/RecipeCard";
@@ -32,18 +35,52 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 export default function Recipe() {
   const { recipe, vkShareHref } = useLoaderData() as Loader;
 
+  const [markedRecipes, setMarkedRecipes] = useAtom(markedRecipesSlugAtom);
+
+  const isBookmarked = markedRecipes.includes(recipe.slug);
+
+  const markRecipe = () => {
+    if (isBookmarked) {
+      return;
+    }
+
+    setMarkedRecipes((current) => [...current, recipe.slug]);
+  };
+
+  const unmarkRecipe = () => {
+    if (!isBookmarked) {
+      return;
+    }
+
+    setMarkedRecipes((current) => current.filter((bm) => bm !== recipe.slug));
+  };
+
   return (
     <Main minHeight="full" height="auto" className="flex flex-col justify-center">
       <Container
         minHeight="fit"
         className="relative flex flex-col gap-6 md:grid md:grid-cols-[auto_1fr]"
       >
-        <div className="flex h-fit flex-col gap-6 md:sticky md:top-[calc(var(--header-height)+1rem)]">
+        <div className="flex h-fit flex-col md:sticky md:top-[calc(var(--header-height)+1rem)]">
           <RecipeCard
             title={recipe.title}
             thumbnail={recipe.thumbnailUrl}
-            className="w-full max-w-none md:max-w-[320px]"
+            className="mb-6 w-full max-w-none md:max-w-[320px]"
           />
+
+          {!isBookmarked && (
+            <Button onClick={markRecipe} className="mb-2 gap-2">
+              <BookmarkIcon className="h-5 w-5" />
+              <span>Отложить</span>
+            </Button>
+          )}
+
+          {!!isBookmarked && (
+            <Button onClick={unmarkRecipe} className="mb-2 gap-2">
+              <BookmarkSlashIcon className="h-5 w-5" />
+              <span>Убрать из отложенных</span>
+            </Button>
+          )}
 
           <Button stateColor="info" as="a" target="_blank" rel="noreferrer" href={vkShareHref}>
             Поделиться в VK
