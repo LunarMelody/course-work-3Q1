@@ -9,7 +9,7 @@ import { Button } from "./ui/Button";
 const NAV_LINKS = [
   { to: "/", name: "Главная" },
   { to: "/recipes", name: "Рецепты" },
-  { to: "/recipes/saved", name: "Отложенные" },
+  { to: "/recipes/bookmarks", name: "Отложенные" },
 ];
 
 export const Header = () => {

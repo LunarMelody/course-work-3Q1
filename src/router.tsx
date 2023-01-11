@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Index from "./routes";
 import ErrorPage from "./routes/error-page";
 import Recipes, { loader as recipesIndexLoader } from "./routes/recipes";
-import { SavedRecipes } from "./routes/recipes/saved";
+import { RecipesBookmarks } from "./routes/recipes/bookmarks";
 import Recipe, {
   ErrorBoundary as RecipeErrorBoundary,
   loader as recipeLoader,
@@ -30,8 +30,8 @@ const router = createBrowserRouter([
             loader: recipesIndexLoader,
           },
           {
-            path: "saved",
-            element: <SavedRecipes />,
+            path: "bookmarks",
+            element: <RecipesBookmarks />,
           },
           {
             path: ":slug",
