@@ -6,12 +6,16 @@ import { z } from "zod";
 import { Container } from "~/components/Container";
 import Main from "~/components/Main";
 import { RecipeCard } from "~/components/RecipeCard";
+import { Button } from "~/components/ui/Button";
 import { RECIPES } from "~/data/recipes";
 
 export type Loader = Awaited<ReturnType<typeof loader>>;
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const slug = await z.string().parseAsync(params.slug);
+
+  const url = new URL(request.url);
+  const vkShareHref = `https://vk.com/share.php?url=${url}`;
 
   const recipe = RECIPES.find((r) => r.slug === slug);
 
@@ -22,11 +26,11 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     });
   }
 
-  return { recipe };
+  return { recipe, vkShareHref };
 };
 
 export default function Recipe() {
-  const { recipe } = useLoaderData() as Loader;
+  const { recipe, vkShareHref } = useLoaderData() as Loader;
 
   return (
     <Main minHeight="full" height="auto" className="flex flex-col justify-center">
@@ -40,6 +44,10 @@ export default function Recipe() {
             thumbnail={recipe.thumbnailUrl}
             className="w-full max-w-none md:max-w-[320px]"
           />
+
+          <Button stateColor="info" as="a" target="_blank" rel="noreferrer" href={vkShareHref}>
+            Поделиться в VK
+          </Button>
         </div>
 
         <div className="rounded-box flex flex-col gap-6 bg-base-100 p-8 shadow-lg">
