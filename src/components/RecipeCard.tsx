@@ -1,7 +1,37 @@
+import type { VariantProps } from "class-variance-authority";
 import type { FC } from "react";
 
-import clsx from "clsx";
+import { cva } from "class-variance-authority";
 import { Link } from "react-router-dom";
+
+type RecipeCardVariantProps = VariantProps<typeof recipeCardVariants>;
+
+const recipeCardVariants = cva(
+  "daisy-card break-inside-avoid overflow-y-hidden bg-base-100 shadow-lg",
+  {
+    variants: {
+      maxWidth: {
+        normal: "max-w-[320px]",
+        none: null,
+      },
+      width: {
+        auto: "w-auto",
+        fit: "w-fit",
+        full: "w-full",
+      },
+      height: {
+        auto: "h-auto",
+        fit: "h-fit",
+        full: "h-full",
+      },
+    },
+    defaultVariants: {
+      height: "fit",
+      width: "full",
+      maxWidth: "normal",
+    },
+  },
+);
 
 type RecipeCardProps = {
   slug?: string;
@@ -9,7 +39,7 @@ type RecipeCardProps = {
   title: string;
   description?: string;
   className?: string;
-};
+} & RecipeCardVariantProps;
 
 export const RecipeCard: FC<RecipeCardProps> = ({
   title,
@@ -17,9 +47,14 @@ export const RecipeCard: FC<RecipeCardProps> = ({
   thumbnail,
   slug,
   className,
+  maxWidth,
+  width,
+  height,
 }) => {
+  const cls = recipeCardVariants({ maxWidth, width, height, className });
+
   return (
-    <div className={clsx("daisy-card h-fit w-full max-w-[320px] bg-base-100 shadow-lg", className)}>
+    <div className={cls}>
       <figure className="w-full">
         <img src={thumbnail} className="aspect-square w-full object-cover" />
       </figure>
@@ -28,8 +63,13 @@ export const RecipeCard: FC<RecipeCardProps> = ({
         <h2 className="daisy-card-title">{title}</h2>
         {description && <p>{description}</p>}
         {slug != null && (
-          <div className="daisy-card-actions justify-end">
-            <Link to={`/recipes/${slug}`} role="button" className="daisy-btn-primary daisy-btn">
+          <div className="daisy-card-actions flex-1 justify-end">
+            <Link
+              to={`/recipes/${slug}`}
+              role="button"
+              className="daisy-btn-primary daisy-btn self-end"
+              preventScrollReset={false}
+            >
               Посмотреть
             </Link>
           </div>

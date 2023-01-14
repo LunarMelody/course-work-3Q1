@@ -15,7 +15,7 @@ const NAV_LINKS = [
 export const Header = () => {
   return (
     <header className="sticky top-0 z-50 flex h-16 w-full flex-row bg-base-100">
-      <Container className="flex h-full flex-row items-center px-2">
+      <Container className="flex h-full flex-row items-center px-2 lg:pl-0">
         <Menu as="div" className="block flex-1 md:hidden">
           <Menu.Button as={Fragment}>
             {({ open }) => (
@@ -55,7 +55,7 @@ export const Header = () => {
             as={Link}
             to="/"
             role="button"
-            className="daisy-btn-secondary daisy-btn text-xl normal-case md:-ml-4"
+            className="daisy-btn-secondary daisy-btn text-xl normal-case"
           >
             eda.pro
           </Button>

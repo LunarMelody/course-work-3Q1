@@ -53,7 +53,7 @@ export default function Recipes() {
   };
 
   return (
-    <Main display="flex" flexDir="col" className="gap-4">
+    <Main display="flex" flexDir="col" className="gap-4" minHeight="full" height="auto">
       <Container>
         <div className="daisy-input-group">
           <Button onClick={onResetClick}>
@@ -82,7 +82,10 @@ export default function Recipes() {
         </Container>
       )}
       {recipes.length > 0 && (
-        <Container className="flex flex-row flex-wrap justify-evenly gap-6">
+        <Container
+          minHeight="full"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        >
           {recipes.map((recipe, idx) => (
             <RecipeCard
               key={idx}
@@ -90,6 +93,9 @@ export default function Recipes() {
               title={recipe.title}
               description={recipe.description}
               thumbnail={recipe.thumbnailUrl}
+              height="auto"
+              maxWidth="none"
+              width="auto"
             />
           ))}
         </Container>

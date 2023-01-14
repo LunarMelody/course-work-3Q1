@@ -2,7 +2,7 @@ import type { LoaderFunctionArgs } from "react-router-dom";
 
 import { BookmarkIcon, BookmarkSlashIcon } from "@heroicons/react/20/solid";
 import { useAtom } from "jotai";
-import { useRouteError, useLoaderData } from "react-router-dom";
+import { Link, useRouteError, useLoaderData } from "react-router-dom";
 import { z } from "zod";
 
 import { markedRecipesSlugAtom } from "~/atoms/savedRecipes";
@@ -56,12 +56,22 @@ export default function Recipe() {
   };
 
   return (
-    <Main minHeight="full" height="auto" className="flex flex-col justify-center">
+    <Main minHeight="full" height="auto" className="flex flex-col">
+      <Container className="mb-4">
+        <div className="daisy-breadcrumbs text-sm">
+          <ul>
+            <li>
+              <Link to="../">Рецепты</Link>
+            </li>
+            <li>{recipe.title}</li>
+          </ul>
+        </div>
+      </Container>
       <Container
         minHeight="fit"
         className="relative flex flex-col gap-6 md:grid md:grid-cols-[auto_1fr]"
       >
-        <div className="flex h-fit flex-col md:sticky md:top-[calc(var(--header-height)+1rem)]">
+        <div className="flex h-fit flex-col">
           <RecipeCard
             title={recipe.title}
             thumbnail={recipe.thumbnailUrl}

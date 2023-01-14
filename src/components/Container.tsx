@@ -22,10 +22,10 @@ const containerVariants = cva("mx-auto", {
       max: "w-max",
     },
     minHeight: {
-      full: "h-full",
-      fit: "h-fit",
-      min: "h-min",
-      max: "h-max",
+      full: "min-h-full",
+      fit: "min-h-fit",
+      min: "min-h-min",
+      max: "min-h-max",
     },
   },
   defaultVariants: {
