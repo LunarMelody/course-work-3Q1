@@ -55,25 +55,23 @@ export default function Recipes() {
   return (
     <Main display="flex" flexDir="col" className="gap-4" minHeight="full" height="auto">
       <Container>
-        <div className="daisy-input-group">
-          <Button onClick={onResetClick}>
-            <XMarkIcon type="button" className="h-5 w-5" />
+        <form ref={searchFormRef} onSubmit={onSearchSubmit} className="daisy-input-group">
+          <Button type="button" onClick={onResetClick}>
+            <XMarkIcon className="h-5 w-5" />
           </Button>
-          <form ref={searchFormRef} onSubmit={onSearchSubmit} className="daisy-input-group">
-            <input
-              ref={searchInputRef}
-              name="query"
-              type="text"
-              placeholder="Введите запрос"
-              className="daisy-input-bordered daisy-input-primary daisy-input w-full"
-              defaultValue={query ?? undefined}
-              autoFocus
-            />
-            <Button>
-              <CheckIcon type="submit" className="h-5 w-5" />
-            </Button>
-          </form>
-        </div>
+          <input
+            ref={searchInputRef}
+            name="query"
+            type="text"
+            placeholder="Введите запрос"
+            className="daisy-input-bordered daisy-input-primary daisy-input w-full"
+            defaultValue={query ?? undefined}
+            autoFocus
+          />
+          <Button type="submit">
+            <CheckIcon className="h-5 w-5" />
+          </Button>
+        </form>
       </Container>
       {recipes.length <= 0 && (
         <Container minHeight="full" className="flex flex-col items-center justify-center space-y-4">
