@@ -12,7 +12,7 @@ export default function Index() {
           className="flex flex-1 flex-col items-center justify-center text-white"
         >
           <h1 className="text-5xl font-bold">eda.pro</h1>
-          <p className="py-6">Блог о современнах рецептах со всего мира</p>
+          <p className="py-6">Сборник рецептов</p>
         </Container>
       </Main>
       <div
@@ -21,9 +21,7 @@ export default function Index() {
           backgroundImage:
             "url(https://cdn.discordapp.com/attachments/1061282284134731786/1062034617902841967/lily-banse--YHSwy6uqvk-unsplash.jpg)",
         }}
-      >
-        asd
-      </div>
+      ></div>
     </Fragment>
   );
 }
